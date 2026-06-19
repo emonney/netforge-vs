@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="NetForge">
+    <Groups>
+      <Group guid="NetForge" id="NetForgeGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+    <Buttons>
+      <Button guid="NetForge" id="OpenConfigurator" priority="0x0100" type="Button">
+        <Parent guid="NetForge" id="NetForgeGroup" />
+        <Strings>
+          <ButtonText>NetForge: New Project (Configurator)</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="NetForge" id="UpgradeToPro" priority="0x0101" type="Button">
+        <Parent guid="NetForge" id="NetForgeGroup" />
+        <Strings>
+          <ButtonText>NetForge: Upgrade to Pro</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="NetForge" value="{6f7a1b2c-3d4e-5f60-7182-93a4b5c6d7e8}">
+      <IDSymbol name="NetForgeGroup" value="0x0001" />
+      <IDSymbol name="OpenConfigurator" value="0x0100" />
+      <IDSymbol name="UpgradeToPro" value="0x0101" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
