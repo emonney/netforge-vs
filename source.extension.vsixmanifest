@@ -3,12 +3,18 @@
   <Metadata>
     <Identity Id="NetForge.VsExtension.6f7a1b2c" Version="1.0.0" Language="en-US" Publisher="adentum" />
     <DisplayName>NetForge — ASP.NET Core + React Starter</DisplayName>
-    <Description xml:space="preserve">Scaffold a production-shaped ASP.NET Core 10 + React 19 app — auth, RBAC, admin, theming — without leaving Visual Studio. Free &amp; MIT Community edition scaffolds locally; Pro adds multi-tenancy, audit, dashboards, webhooks, search, real-time, and more.</Description>
+    <Description xml:space="preserve">NetForge scaffolds a production-shaped ASP.NET Core 10 + React 19 app inside Visual Studio — a beautiful, responsive, AI-extensible starter that builds and runs on the first try.
+
+Free Community edition (MIT): ASP.NET Core 10 minimal APIs + EF Core; React 19 + TypeScript + Vite + Tailwind + shadcn/ui; cookie auth; roles &amp; permissions; an admin area; light/dark theming; i18n; SQLite; one-command run.
+
+Pro adds multi-tenancy, audit, a widget dashboard, global search, notifications &amp; real-time (SignalR), webhooks, 2FA/OAuth/sessions, file uploads, CSV/Excel/PDF export &amp; import, background jobs, PWA, and a Sales demo.
+
+Create it from the “Create a new project” dialog (search “NetForge”) or via Tools ▸ NetForge. Pro unlocks with any GitHub Sponsors tier; Community stays free &amp; MIT, forever.</Description>
     <MoreInfo>https://netforge.ebenmonney.com</MoreInfo>
     <License>LICENSE</License>
     <Icon>Resources\icon.png</Icon>
     <PreviewImage>Resources\preview.png</PreviewImage>
-    <Tags>aspnetcore;asp.net core;react;starter;template;scaffold;dotnet;fullstack;project template</Tags>
+    <Tags>asp.net core;aspnetcore;react;react 19;typescript;vite;tailwind;tailwindcss;shadcn;dotnet;.net 10;fullstack;full stack;web;spa;single page application;starter;template;scaffold;boilerplate;project template;identity;authentication;authorization;rbac;ef core;entity framework;minimal api;signalr;line of business;admin;dashboard;clean architecture</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)">
