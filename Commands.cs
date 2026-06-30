@@ -1,35 +1,71 @@
-using System.Diagnostics;
+using System;
+using System.ComponentModel.Design;
 using Community.VisualStudio.Toolkit;
 using Microsoft.VisualStudio.Shell;
+using NetForge.VsExtension.Core;
+using NetForge.VsExtension.UI;
 using Task = System.Threading.Tasks.Task;
 
 namespace NetForge.VsExtension
 {
-    // PackageIds is generated from VSCommandTable.vsct by the toolkit at build time
-    // (NetForge.VsExtension.VSCommandTable.PackageIds).
-
-    /// <summary>Opens the NetForge configurator — pick features + edition, then download a starter.</summary>
-    [Command(PackageIds.OpenConfigurator)]
-    internal sealed class OpenConfiguratorCommand : BaseCommand<OpenConfiguratorCommand>
+    /// <summary>Registers the Tools ▸ NetForge / File ▸ New commands against the menu command service.</summary>
+    internal static class Commands
     {
-        protected override Task ExecuteAsync(OleMenuCmdEventArgs e)
+        public static async Task RegisterAsync(AsyncPackage package)
         {
-            Browse("https://netforge.ebenmonney.com");
-            return Task.CompletedTask;
+            await package.JoinableTaskFactory.SwitchToMainThreadAsync();
+            if (!(await package.GetServiceAsync(typeof(IMenuCommandService)) is OleMenuCommandService mcs))
+                return;
+
+            mcs.AddCommand(Bind(PackageIds.NewProject, () => Fire(package, NewProjectAsync)));
+            mcs.AddCommand(Bind(PackageIds.WhatsInPro, ShowPro));
+            mcs.AddCommand(Bind(PackageIds.OpenConfigurator, () => NetForgeUrls.Open(NetForgeUrls.Configurator)));
+            mcs.AddCommand(Bind(PackageIds.OpenDemo, () => NetForgeUrls.Open(NetForgeUrls.Demo)));
+            mcs.AddCommand(Bind(PackageIds.OpenDocs, () => NetForgeUrls.Open(NetForgeUrls.Docs)));
         }
 
-        internal static void Browse(string url) =>
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
-    }
+        private static MenuCommand Bind(int id, Action exec) =>
+            new MenuCommand((s, e) => exec(), new CommandID(PackageGuids.CmdSet, id));
 
-    /// <summary>Opens GitHub Sponsors — any amount unlocks the full Pro feature set + the offline CLI.</summary>
-    [Command(PackageIds.UpgradeToPro)]
-    internal sealed class UpgradeToProCommand : BaseCommand<UpgradeToProCommand>
-    {
-        protected override Task ExecuteAsync(OleMenuCmdEventArgs e)
+        private static void Fire(AsyncPackage package, Func<Task> work)
         {
-            OpenConfiguratorCommand.Browse("https://github.com/sponsors/emonney");
-            return Task.CompletedTask;
+            _ = package.JoinableTaskFactory.RunAsync(async () =>
+            {
+                try
+                {
+                    await work();
+                }
+                catch (Exception ex)
+                {
+                    await VS.MessageBox.ShowErrorAsync("NetForge", ex.Message);
+                }
+            });
+        }
+
+        private static void ShowPro()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            new ProShowcaseDialog().ShowDialog();
+        }
+
+        private static async Task NewProjectAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            var dialog = new NewProjectDialog();
+            if (dialog.ShowDialog() != true)
+                return;
+
+            if (dialog.SelectedEdition == NewProjectDialog.Edition.Pro)
+            {
+                var name = Uri.EscapeDataString(dialog.ProjectName ?? string.Empty);
+                NetForgeUrls.Open(string.IsNullOrEmpty(name)
+                    ? NetForgeUrls.Configurator
+                    : NetForgeUrls.Configurator + "?name=" + name);
+                return;
+            }
+
+            await ProjectCreator.CreateCommunityAsync(dialog.ProjectName, dialog.Location);
         }
     }
 }

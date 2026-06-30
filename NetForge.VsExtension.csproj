@@ -1,30 +1,51 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<!--
+  NetForge — Visual Studio extension (VSIX). Targets VS 2022 (17.0) and VS 2026 (18.x).
 
-  <!--
-    NetForge — Visual Studio 2022 extension (VSIX).
-    Build + package inside Visual Studio 2022 with the "Visual Studio extension development" workload
-    installed (it provides the VSSDK build tooling). `dotnet build` alone will NOT produce a .vsix.
-    In VS: open the .sln, set this as the startup project, and Build → the .vsix lands in bin\Release.
-  -->
+  Uses explicit Sdk.props/Sdk.targets imports (instead of the `<Project Sdk="…">` shorthand) so that the
+  VSSDK's Microsoft.VsSDK.targets — which defines CreateVsixContainer / GeneratePkgDef — can be imported
+  AFTER the .NET SDK targets. Without that final import the project compiles a DLL but never builds a .vsix.
+
+  Build/package needs full MSBuild with the "Visual Studio extension development" workload. From a Developer
+  prompt:  msbuild NetForge.VsExtension.csproj /t:Restore /t:Build /p:Configuration=Release
+  The .vsix lands in bin\Release\net48\.
+-->
+<Project>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <!-- net48: the Community toolkit ships only a net48 lib, and VS 2022/2026 both run on .NET 4.8. -->
+    <TargetFramework>net48</TargetFramework>
     <RootNamespace>NetForge.VsExtension</RootNamespace>
     <AssemblyName>NetForge.VsExtension</AssemblyName>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <CreateVsixContainer>true</CreateVsixContainer>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
     <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <!-- Don't auto-deploy into the Exp hive on a command-line build. -->
+    <DeployExtension>false</DeployExtension>
     <StartAction>Program</StartAction>
     <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
+    <!-- Take full control of non-code items so explicit Resource/Content includes don't collide. -->
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- The SDK reference assemblies (Shell, PlatformUI, EnvironmentColors, …). ExcludeAssets=runtime so VS
+         provides them at run time and they aren't copied into the VSIX. Explicit here so a command-line
+         MSBuild resolves them (an in-IDE build would get them from the installed workload). -->
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
     <PackageReference Include="Community.VisualStudio.Toolkit.17" Version="17.0.533" />
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.10.2186" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,5 +56,36 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+
+  <!-- Marketplace assets referenced by the manifest -> packed into the VSIX. -->
+  <ItemGroup>
+    <Content Include="Resources\icon.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\preview.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <!-- Referenced by <License> in the manifest; must be present in the archive root. -->
+    <Content Include="LICENSE">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+
+  <!-- Images shown inside the WPF dialogs (embedded as WPF resources, addressable via pack URIs). -->
+  <ItemGroup>
+    <Resource Include="Resources\logo.png" />
+    <Resource Include="Resources\screenshots\dashboard-light.png" />
+    <Resource Include="Resources\screenshots\dashboard-dark.png" />
+    <Resource Include="Resources\screenshots\command-palette.png" />
+    <Resource Include="Resources\screenshots\products-desktop.png" />
+    <Resource Include="Resources\screenshots\settings.png" />
+  </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+  <!-- Must come AFTER the .NET SDK targets: defines CreateVsixContainer / GeneratePkgDef.
+       VSToolsPath is set to the VSSDK.BuildTools package's tools folder by its props. -->
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets"
+          Condition="'$(VSToolsPath)' != '' and Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
 
 </Project>

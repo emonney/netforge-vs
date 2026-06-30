@@ -1,0 +1,106 @@
+<Window
+    x:Class="NetForge.VsExtension.UI.ProShowcaseDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="NetForge Pro"
+    Width="760" Height="660" MinWidth="560" MinHeight="420"
+    WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+    TextOptions.TextFormattingMode="Display"
+    Background="{DynamicResource NfWindowBg}" Foreground="{DynamicResource NfText}">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="NfWindowBg" Color="#252526" />
+        <SolidColorBrush x:Key="NfText" Color="#F1F1F1" />
+        <SolidColorBrush x:Key="NfBorder" Color="#3F3F46" />
+        <SolidColorBrush x:Key="NfInputBg" Color="#1E1E1E" />
+        <SolidColorBrush x:Key="Muted" Color="#9AA0A6" />
+        <SolidColorBrush x:Key="Accent" Color="#6D28D9" />
+        <SolidColorBrush x:Key="AccentHover" Color="#7C3AED" />
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource NfText}" />
+        </Style>
+
+        <Style x:Key="Secondary" TargetType="Button">
+            <Setter Property="Padding" Value="14,7" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource NfText}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource NfBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style x:Key="Primary" TargetType="Button">
+            <Setter Property="Padding" Value="16,7" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b" Background="{StaticResource Accent}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="{StaticResource AccentHover}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="FeatureCard">
+            <Border BorderThickness="1" CornerRadius="6" Padding="11,9" Width="210" Margin="0,0,10,10"
+                    BorderBrush="{DynamicResource NfBorder}">
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" Margin="0,0,0,2" />
+                    <TextBlock Text="{Binding Blurb}" Foreground="{DynamicResource Muted}" TextWrapping="Wrap" FontSize="11.5" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24,22,24,24">
+        <StackPanel MaxWidth="700">
+            <Border HorizontalAlignment="Left" Background="{StaticResource Accent}" CornerRadius="999" Padding="11,3" Margin="0,0,0,12">
+                <TextBlock Text="◆  NETFORGE PRO" Foreground="White" FontSize="11" FontWeight="Bold" />
+            </Border>
+            <TextBlock Text="Build the whole back-office, not just the login page." FontSize="23" FontWeight="SemiBold" TextWrapping="Wrap" />
+            <TextBlock Margin="0,8,0,16" Foreground="{DynamicResource Muted}" TextWrapping="Wrap"
+                       Text="You're building on the free, MIT-licensed Community core. Pro adds the subsystems every line-of-business app eventually needs — already wired, tested, and beautiful in light and dark." />
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,22">
+                <Button Content="Sponsor &amp; unlock Pro" Style="{StaticResource Primary}" Tag="https://github.com/sponsors/emonney" Click="Open_Click" />
+                <Button Content="Live demo" Style="{StaticResource Secondary}" Tag="https://demo.netforge.ebenmonney.com" Click="Open_Click" />
+                <Button Content="Configurator" Style="{StaticResource Secondary}" Tag="https://netforge.ebenmonney.com" Click="Open_Click" />
+            </StackPanel>
+
+            <TextBlock Text="See it running" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,10" />
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,22">
+                <Border BorderThickness="1" CornerRadius="8" Margin="0,0,12,0" BorderBrush="{DynamicResource NfBorder}">
+                    <Image Source="pack://application:,,,/NetForge.VsExtension;component/Resources/screenshots/dashboard-light.png" Width="330" />
+                </Border>
+                <Border BorderThickness="1" CornerRadius="8" BorderBrush="{DynamicResource NfBorder}">
+                    <Image Source="pack://application:,,,/NetForge.VsExtension;component/Resources/screenshots/command-palette.png" Width="330" />
+                </Border>
+            </StackPanel>
+
+            <TextBlock Text="What Pro unlocks" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,10" />
+            <ItemsControl x:Name="FeatureList" ItemTemplate="{StaticResource FeatureCard}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border BorderThickness="0,1,0,0" Margin="0,16,0,0" Padding="0,14,0,0" BorderBrush="{DynamicResource NfBorder}">
+                <TextBlock Foreground="{DynamicResource Muted}" TextWrapping="Wrap"
+                           Text="The Community edition stays free &amp; MIT, forever. Pro is unlocked by any GitHub Sponsors tier, and includes the offline CLI and the private template feed." />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

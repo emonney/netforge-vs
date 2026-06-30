@@ -8,18 +8,31 @@ using Task = System.Threading.Tasks.Task;
 namespace NetForge.VsExtension
 {
     /// <summary>
-    /// The NetForge VS 2022 package. Registers the Tools-menu commands. Build + package this inside Visual
-    /// Studio 2022 (Extension Development workload) — the VSSDK build tooling produces the .vsix.
+    /// The NetForge Visual Studio package. Registers the Tools ▸ NetForge commands (and the File ▸ New
+    /// entry). Build/package inside Visual Studio (or full MSBuild) with the extension-development workload.
     /// </summary>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("NetForge", "ASP.NET Core 10 + React 19 starter", "0.1.0")]
+    [InstalledProductRegistration("NetForge", "ASP.NET Core 10 + React 19 starter", "1.0.0")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid("6f7a1b2c-3d4e-5f60-7182-93a4b5c6d7e8")]
     public sealed class NetForgePackage : ToolkitPackage
     {
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            await this.RegisterCommandsAsync();
+            await Commands.RegisterAsync(this);
         }
+    }
+
+    /// <summary>Outbound links — kept in one place so commands and dialogs agree.</summary>
+    internal static class NetForgeUrls
+    {
+        public const string Configurator = "https://netforge.ebenmonney.com";
+        public const string Demo = "https://demo.netforge.ebenmonney.com";
+        public const string Docs = "https://docs.netforge.ebenmonney.com";
+        public const string Sponsor = "https://github.com/sponsors/emonney";
+        public const string DotnetDownload = "https://dotnet.microsoft.com/download/dotnet/10.0";
+
+        public static void Open(string url) =>
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
     }
 }

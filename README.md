@@ -1,44 +1,50 @@
-# NetForge for Visual Studio 2022
+<div align="center">
+  <img src="Resources/icon.png" width="84" alt="NetForge" />
+  <h1>NetForge for Visual Studio</h1>
+  <p><strong>Scaffold a production-shaped ASP.NET Core 10 + React 19 app — without leaving Visual Studio.</strong></p>
+</div>
 
-A Visual Studio 2022 extension that surfaces NetForge — the AI-ready ASP.NET Core 10 + React 19 starter —
-from the **Tools** menu: open the configurator to scaffold a project, and jump to Pro.
+NetForge is an opinionated, beautiful-out-of-the-box starter for line-of-business apps. This extension brings
+it into Visual Studio: **Tools ▸ NetForge ▸ New NetForge Project…** opens a guided dialog, and you're running.
 
-> **Status:** scaffold built with the modern [Community.VisualStudio.Toolkit](https://github.com/VsixCommunity/Community.VisualStudio.Toolkit).
-> It **builds and packages inside Visual Studio 2022** with the *"Visual Studio extension development"*
-> workload installed (which provides the VSSDK build tooling). `dotnet build` on its own will not produce a
-> `.vsix`. This is the counterpart to the [VS Code extension](../netforge-vscode), which is fully built.
+![NetForge dashboard](Resources/preview.png)
 
-## What it does
+## Features
 
-- **Tools → NetForge: New Project (Configurator)** — opens [the configurator](https://netforge.ebenmonney.com)
-  to pick features + edition and download a starter.
-- **Tools → NetForge: Upgrade to Pro** — opens [GitHub Sponsors](https://github.com/sponsors/emonney);
-  any amount unlocks the full Pro feature set and the offline CLI.
+- **New NetForge Project…** — a guided dialog under **Tools ▸ NetForge**.
+- **Community scaffolds locally** with `dotnet new` — offline, no sign-in. The extension detects your .NET
+  SDK and installs the `NetForge.Templates` package the first time, then opens the new solution for you.
+- **A themed Pro showcase** — see what Pro unlocks (screenshots + the full feature grid) inside the IDE.
+- Quick links to the **configurator**, **live demo**, and **docs**.
 
-## Build & package (in Visual Studio 2022)
+## Requirements
 
-1. Install the **"Visual Studio extension development"** workload (VS Installer).
-2. Open this folder in VS 2022 (it creates a solution around `NetForge.VsExtension.csproj`).
-3. **Build → Build Solution** (Release) — the `.vsix` lands in `bin\Release\`.
-4. **F5** launches the VS Experimental Instance to debug the commands.
-5. Publish to the [Visual Studio Marketplace](https://marketplace.visualstudio.com/manage) via the
-   *Manage Publishers & Extensions* portal (or `VsixPublisher.exe publish`).
+- Visual Studio **2022 (17.x)** or **2026 (18.x)**.
+- The [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) for Community scaffolding & running.
 
-## Files
+## Community vs Pro
 
-- `NetForge.VsExtension.csproj` — SDK-style VSIX project (net472 + VSSDK build tools).
-- `source.extension.vsixmanifest` — marketplace metadata + install targets.
-- `VSCommandTable.vsct` — the Tools-menu group + the two command buttons.
-- `NetForgePackage.cs` — the async package (registers commands).
-- `Commands.cs` — the two command handlers.
+The **Community** edition is scaffolded locally and is free forever under the MIT license. **Pro** is generated
+from the [configurator](https://netforge.ebenmonney.com) after signing in, and is unlocked by any
+[GitHub Sponsors](https://github.com/sponsors/emonney) tier — it adds multi-tenancy, audit, dashboards,
+webhooks, global search, real-time, 2FA/OAuth, file uploads, export/import, background jobs, PWA, and a full
+Sales demo domain.
 
-## Next steps (roadmap)
+## Building this extension
 
-- Replace the external-browser "Upgrade to Pro" with an in-VS WebView2 tool window showing the Pro pitch
-  (mirrors the VS Code extension's webview).
-- In-VS Basic scaffolding (download from the configurator API + add to the open solution), matching the
-  VS Code extension's New Project flow.
+Requires Visual Studio with the **Visual Studio extension development** workload (the VSSDK build tooling).
+`dotnet build` alone will not produce a `.vsix`. From a Developer prompt:
+
+```
+msbuild NetForge.VsExtension.csproj /t:Restore;Build /p:Configuration=Release
+```
+
+The `.vsix` lands in `bin\Release\`.
+
+## Links
+
+🌐 [Configurator](https://netforge.ebenmonney.com) · ▶ [Live demo](https://demo.netforge.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · 💜 [Sponsor & unlock Pro](https://github.com/sponsors/emonney)
 
 ## License
 
-MIT.
+The extension is MIT-licensed. The Community template it scaffolds is MIT; the Pro edition is sponsor-licensed.
