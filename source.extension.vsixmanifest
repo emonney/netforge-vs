@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="NetForge.VsExtension.6f7a1b2c" Version="1.0.0" Language="en-US" Publisher="adentum" />
     <DisplayName>NetForge — ASP.NET Core + React Starter</DisplayName>
-    <Description xml:space="preserve">NetForge scaffolds a production-shaped ASP.NET Core 10 + React 19 app inside Visual Studio — a beautiful, responsive, AI-extensible starter that builds and runs on the first try.
+    <Description xml:space="preserve">NetForge scaffolds a production-shaped ASP.NET Core 10 + React 19 app inside Visual Studio — an AI-ready starter, built to be extended by AI or by you. Its vertical-slice architecture and clear conventions let an assistant add a whole feature from a single prompt. Beautiful, responsive, and it runs on the first try.
 
 Free Community edition (MIT): ASP.NET Core 10 minimal APIs + EF Core; React 19 + TypeScript + Vite + Tailwind + shadcn/ui; cookie auth; roles &amp; permissions; an admin area; light/dark theming; i18n; SQLite; one-command run.
 

@@ -23,7 +23,16 @@ namespace NetForge.VsExtension
     {
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            await Commands.RegisterAsync(this);
+            // Nothing here may throw out of InitializeAsync — an unhandled exception makes VS report
+            // "package did not load correctly" and suppresses the menu. Register commands defensively.
+            try
+            {
+                await Commands.RegisterAsync(this);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[NetForge] command registration failed: " + ex);
+            }
 
             // Best-effort, off the UI thread: make NetForge show up in "Create a new project" without the user
             // ever opening our wizard. Never blocks or fails startup.
