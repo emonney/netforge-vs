@@ -40,7 +40,7 @@
          MSBuild resolves them (an in-IDE build would get them from the installed workload). -->
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
     <PackageReference Include="Community.VisualStudio.Toolkit.17" Version="17.0.533" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.10.2186" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.11.414" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
