@@ -21,6 +21,10 @@
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <!-- Register the package by CODEBASE (path in the extension folder), not by assembly name. Without this
+         the pkgdef emits only "Assembly"=… and VS's Activator.CreateInstance can't find our DLL (it's not in
+         the GAC) -> "package did not load correctly" / FileNotFoundException. -->
+    <RegisterWithCodebase>true</RegisterWithCodebase>
     <CreateVsixContainer>true</CreateVsixContainer>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
