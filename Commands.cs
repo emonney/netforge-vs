@@ -59,9 +59,8 @@ namespace NetForge.VsExtension
             if (dialog.SelectedEdition == NewProjectDialog.Edition.Pro)
             {
                 var name = Uri.EscapeDataString(dialog.ProjectName ?? string.Empty);
-                NetForgeUrls.Open(string.IsNullOrEmpty(name)
-                    ? NetForgeUrls.Configurator
-                    : NetForgeUrls.Configurator + "?name=" + name);
+                var url = NetForgeUrls.Configurator + "?edition=pro" + (string.IsNullOrEmpty(name) ? "" : "&name=" + name);
+                NetForgeUrls.Open(url);
                 return;
             }
 

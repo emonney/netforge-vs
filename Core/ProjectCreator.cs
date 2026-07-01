@@ -73,6 +73,7 @@ namespace NetForge.VsExtension.Core
                     var solutionService = await VS.GetRequiredServiceAsync<SVsSolution, IVsSolution>();
                     await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     solutionService.OpenSolutionFile(0, solution);
+                    await TrySetServerStartupAsync(name + ".Server");
                 }
                 catch (Exception ex)
                 {
@@ -97,6 +98,34 @@ namespace NetForge.VsExtension.Core
             if (_pane == null)
                 _pane = await VS.Windows.CreateOutputWindowPaneAsync("NetForge");
             return _pane;
+        }
+
+        // Best-effort: VS defaults the startup project to the .esproj client; flip it to the .Server so
+        // "Start Debugging" runs the app (SpaProxy launches the client). Polls briefly for async solution load.
+        private static async Task TrySetServerStartupAsync(string serverProjectName)
+        {
+            try
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                var dte = await VS.GetRequiredServiceAsync<SDTE, EnvDTE.DTE>();
+                for (int i = 0; i < 30; i++)
+                {
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    foreach (EnvDTE.Project p in dte.Solution.Projects)
+                    {
+                        if (string.Equals(p.Name, serverProjectName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            dte.Solution.SolutionBuild.StartupProjects = p.UniqueName;
+                            return;
+                        }
+                    }
+                    await System.Threading.Tasks.Task.Delay(250);
+                }
+            }
+            catch
+            {
+                // Low-priority nicety; the user can set the startup project manually.
+            }
         }
 
         private static string FindSolution(string dir)

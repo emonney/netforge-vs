@@ -3,13 +3,13 @@
   <Metadata>
     <Identity Id="NetForge.VsExtension.6f7a1b2c" Version="1.0.0" Language="en-US" Publisher="adentum" />
     <DisplayName>NetForge — ASP.NET Core + React Starter</DisplayName>
-    <Description xml:space="preserve">NetForge scaffolds a production-shaped ASP.NET Core 10 + React 19 app inside Visual Studio — an AI-ready starter, built to be extended by AI or by you. Its vertical-slice architecture and clear conventions let an assistant add a whole feature from a single prompt. Beautiful, responsive, and it runs on the first try.
+    <Description xml:space="preserve">NetForge scaffolds a production-shaped ASP.NET Core 10 + React 19 app inside Visual Studio — an AI-ready starter built to be extended by AI or by you: its vertical-slice architecture lets an AI assistant add a whole feature from a single prompt, and stays readable enough for you to review at a glance. Beautiful, responsive, runs on the first try.
 
 Free Community edition (MIT): ASP.NET Core 10 minimal APIs + EF Core; React 19 + TypeScript + Vite + Tailwind + shadcn/ui; cookie auth; roles &amp; permissions; an admin area; light/dark theming; i18n; SQLite; one-command run.
 
 Pro adds multi-tenancy, audit, a widget dashboard, global search, notifications &amp; real-time (SignalR), webhooks, 2FA/OAuth/sessions, file uploads, CSV/Excel/PDF export &amp; import, background jobs, PWA, and a Sales demo.
 
-Create it from the “Create a new project” dialog (search “NetForge”) or via Tools ▸ NetForge. Pro unlocks with any GitHub Sponsors tier; Community stays free &amp; MIT, forever.</Description>
+Create it from the NetForge menu or the “Create a new project” dialog. Pro unlocks with any GitHub Sponsors tier; Community stays free &amp; MIT, forever.</Description>
     <MoreInfo>https://netforge.ebenmonney.com</MoreInfo>
     <License>LICENSE</License>
     <Icon>Resources\icon.png</Icon>

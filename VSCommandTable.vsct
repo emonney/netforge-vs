@@ -5,9 +5,10 @@
 
   <Commands package="NetForge">
     <Menus>
-      <!-- The "NetForge" submenu shown in the Tools menu. -->
+      <!-- A top-level "NetForge" menu on the main menu bar (parented to the standard main-menu group that
+           positions near Tools/Extensions). -->
       <Menu guid="NetForge" id="NetForgeMenu" priority="0x0700" type="Menu">
-        <Parent guid="NetForge" id="NetForgeToolsGroup" />
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
         <Strings>
           <ButtonText>NetForge</ButtonText>
         </Strings>
@@ -15,9 +16,6 @@
     </Menus>
 
     <Groups>
-      <Group guid="NetForge" id="NetForgeToolsGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
-      </Group>
       <Group guid="NetForge" id="NetForgeMenuGroup" priority="0x0100">
         <Parent guid="NetForge" id="NetForgeMenu" />
       </Group>
@@ -62,7 +60,6 @@
 
   <Symbols>
     <GuidSymbol name="NetForge" value="{6f7a1b2c-3d4e-5f60-7182-93a4b5c6d7e8}">
-      <IDSymbol name="NetForgeToolsGroup" value="0x1010" />
       <IDSymbol name="NetForgeMenu" value="0x1020" />
       <IDSymbol name="NetForgeMenuGroup" value="0x1030" />
       <IDSymbol name="NetForgeLinksGroup" value="0x1040" />
