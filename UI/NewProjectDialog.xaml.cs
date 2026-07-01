@@ -87,6 +87,36 @@ namespace NetForge.VsExtension.UI
             BtnPrimary.IsEnabled = error == null;
         }
 
+        private void BrandColor_Changed(object sender, TextChangedEventArgs e) => UpdateSwatch();
+
+        private void UpdateSwatch()
+        {
+            if (ColorSwatch == null) return;
+            var c = ParseColor(TxtBrandColor.Text);
+            ColorSwatch.Background = c.HasValue
+                ? new System.Windows.Media.SolidColorBrush(c.Value)
+                : System.Windows.Media.Brushes.Transparent;
+        }
+
+        private static System.Windows.Media.Color? ParseColor(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return null;
+            try { return (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(text.Trim()); }
+            catch { return null; }
+        }
+
+        private void PickColor_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dlg = new System.Windows.Forms.ColorDialog { FullOpen = true, AnyColor = true })
+            {
+                var current = ParseColor(TxtBrandColor.Text);
+                if (current.HasValue)
+                    dlg.Color = System.Drawing.Color.FromArgb(current.Value.R, current.Value.G, current.Value.B);
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    TxtBrandColor.Text = string.Format("#{0:X2}{1:X2}{2:X2}", dlg.Color.R, dlg.Color.G, dlg.Color.B);
+            }
+        }
+
         private void Browse_Click(object sender, RoutedEventArgs e)
         {
             using (var dlg = new System.Windows.Forms.FolderBrowserDialog())

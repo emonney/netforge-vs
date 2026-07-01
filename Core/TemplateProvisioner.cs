@@ -25,8 +25,10 @@ namespace NetForge.VsExtension.Core
                 if (!sdk.Installed)
                     return; // no SDK yet; don't nag at startup — the New Project flow handles it on demand
 
-                // `dotnet new install` installs if missing and updates to the latest otherwise.
-                var result = await DotNetCli.InstallTemplateAsync();
+                // Install the bundled, version-matched .nupkg (offline) so NetForge shows in the native
+                // "Create a new project" dialog immediately after this extension loads — not only after the
+                // first use of our own wizard. Falls back to nuget.org if no nupkg is bundled.
+                var result = await DotNetCli.InstallTemplateAsync(DotNetCli.FindBundledTemplate());
                 if (result.Code == 0)
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(marker));

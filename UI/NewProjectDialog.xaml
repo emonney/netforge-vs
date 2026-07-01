@@ -31,17 +31,65 @@
             <Setter Property="Foreground" Value="{DynamicResource NfText}" />
         </Style>
 
-        <Style TargetType="ComboBox">
-            <Setter Property="Padding" Value="6,4" />
-            <Setter Property="Background" Value="{DynamicResource NfInputBg}" />
+        <!-- Fully templated so the closed selection box themes to the VS palette; the default WPF ComboBox
+             chrome renders white-on-white on dark themes (unreadable). -->
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Padding" Value="8,5" />
             <Setter Property="Foreground" Value="{DynamicResource NfText}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource NfBorder}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ib" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ib" Property="Background" Value="{DynamicResource Accent}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Padding" Value="6,3" />
+        <Style TargetType="ComboBox">
             <Setter Property="Foreground" Value="{DynamicResource NfText}" />
             <Setter Property="Background" Value="{DynamicResource NfInputBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource NfBorder}" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Focusable="False" ClickMode="Press"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="{DynamicResource NfInputBg}" BorderBrush="{DynamicResource NfBorder}"
+                                                BorderThickness="1" CornerRadius="3">
+                                            <Path x:Name="arrow" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"
+                                                  Data="M 0 0 L 4 4 L 8 0 Z" Fill="{DynamicResource NfText}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              Margin="10,0,26,0" VerticalAlignment="Center"
+                                              TextElement.Foreground="{DynamicResource NfText}" />
+                            <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True"
+                                   Focusable="False" PopupAnimation="Slide">
+                                <Border Background="{DynamicResource NfInputBg}" BorderBrush="{DynamicResource NfBorder}" BorderThickness="1"
+                                        MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="260" Margin="0,2,0,0">
+                                    <ScrollViewer>
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="Card" TargetType="Border">
@@ -160,7 +208,18 @@
 
                 <StackPanel Margin="0,12,0,0">
                     <TextBlock Text="Accent colour" Margin="0,0,0,4" />
-                    <TextBox x:Name="TxtBrandColor" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="ColorSwatch" Grid.Column="0" Width="30" Height="30" CornerRadius="4"
+                                BorderBrush="{DynamicResource NfBorder}" BorderThickness="1" Margin="0,0,8,0" Background="Transparent" />
+                        <TextBox x:Name="TxtBrandColor" Grid.Column="1" VerticalContentAlignment="Center" TextChanged="BrandColor_Changed" />
+                        <Button x:Name="BtnPickColor" Grid.Column="2" Content="Pick…" Margin="8,0,0,0"
+                                Style="{StaticResource Secondary}" Click="PickColor_Click" />
+                    </Grid>
                     <TextBlock Text="Optional — any CSS colour (e.g. #4f46e5). Blank uses the theme default; change it anytime at /admin/appearance."
                                Foreground="{DynamicResource Muted}" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
                 </StackPanel>
