@@ -16,6 +16,9 @@ namespace NetForge.VsExtension.UI
         public Edition SelectedEdition { get; private set; } = Edition.Community;
         public string ProjectName { get; private set; }
         public string Location { get; private set; }
+        public string Database { get; private set; } = "sqlite";
+        public string BrandTheme { get; private set; } = string.Empty;
+        public string BrandColor { get; private set; } = string.Empty;
 
         public NewProjectDialog()
         {
@@ -102,6 +105,9 @@ namespace NetForge.VsExtension.UI
         {
             ProjectName = (TxtName.Text ?? string.Empty).Trim();
             Location = (TxtLocation.Text ?? string.Empty).Trim();
+            Database = ((CboDatabase.SelectedItem as ComboBoxItem)?.Tag as string) ?? "sqlite";
+            BrandTheme = ((CboTheme.SelectedItem as ComboBoxItem)?.Tag as string) ?? string.Empty;
+            BrandColor = (TxtBrandColor.Text ?? string.Empty).Trim();
             DialogResult = true;
             Close();
         }

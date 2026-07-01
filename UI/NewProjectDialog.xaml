@@ -31,6 +31,19 @@
             <Setter Property="Foreground" Value="{DynamicResource NfText}" />
         </Style>
 
+        <Style TargetType="ComboBox">
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="Background" Value="{DynamicResource NfInputBg}" />
+            <Setter Property="Foreground" Value="{DynamicResource NfText}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource NfBorder}" />
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Padding" Value="6,3" />
+            <Setter Property="Foreground" Value="{DynamicResource NfText}" />
+            <Setter Property="Background" Value="{DynamicResource NfInputBg}" />
+        </Style>
+
         <Style x:Key="Card" TargetType="Border">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="{DynamicResource NfBorder}" />
@@ -118,6 +131,39 @@
                     <Button x:Name="BtnBrowse" Grid.Column="1" Content="Browse…" Margin="8,0,0,0"
                             Style="{StaticResource Secondary}" Click="Browse_Click" />
                 </Grid>
+
+                <Grid Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Database" Margin="0,0,0,4" />
+                        <ComboBox x:Name="CboDatabase" SelectedIndex="0">
+                            <ComboBoxItem Content="SQLite" Tag="sqlite" />
+                            <ComboBoxItem Content="PostgreSQL" Tag="postgres" />
+                            <ComboBoxItem Content="SQL Server" Tag="sqlserver" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Theme" Margin="0,0,0,4" />
+                        <ComboBox x:Name="CboTheme" SelectedIndex="0">
+                            <ComboBoxItem Content="Default" Tag="" />
+                            <ComboBoxItem Content="Zinc" Tag="zinc" />
+                            <ComboBoxItem Content="Ocean" Tag="ocean" />
+                            <ComboBoxItem Content="Forest" Tag="forest" />
+                            <ComboBoxItem Content="Sunset" Tag="sunset" />
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="0,12,0,0">
+                    <TextBlock Text="Accent colour" Margin="0,0,0,4" />
+                    <TextBox x:Name="TxtBrandColor" />
+                    <TextBlock Text="Optional — any CSS colour (e.g. #4f46e5). Blank uses the theme default; change it anytime at /admin/appearance."
+                               Foreground="{DynamicResource Muted}" FontSize="11" Margin="0,4,0,0" TextWrapping="Wrap" />
+                </StackPanel>
             </StackPanel>
 
             <TextBlock x:Name="ValidationText" Foreground="#E06C75" TextWrapping="Wrap" Margin="0,8,0,0" Visibility="Collapsed" />
