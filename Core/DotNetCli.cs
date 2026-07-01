@@ -1,5 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -85,9 +88,29 @@ namespace NetForge.VsExtension.Core
                 && text.IndexOf("no templates", StringComparison.OrdinalIgnoreCase) < 0;
         }
 
-        public static Task<CliResult> InstallTemplateAsync()
+        /// <summary>The version-matched NetForge.Templates.*.nupkg bundled beside the extension, or null.</summary>
+        public static string FindBundledTemplate()
         {
-            return RunAsync("new install " + TemplatePackageId);
+            try
+            {
+                var dir = Path.GetDirectoryName(typeof(DotNetCli).Assembly.Location);
+                var templates = Path.Combine(dir, "Templates");
+                return Directory.Exists(templates)
+                    ? Directory.GetFiles(templates, "NetForge.Templates.*.nupkg").FirstOrDefault()
+                    : null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>Install the Community template: a bundled .nupkg (offline, version-matched, --force) or the nuget id.</summary>
+        public static Task<CliResult> InstallTemplateAsync(string source = null)
+        {
+            return string.IsNullOrEmpty(source)
+                ? RunAsync("new install " + TemplatePackageId)
+                : RunAsync("new install \"" + source + "\" --force");
         }
 
         public static Task<CliResult> ScaffoldAsync(string name, string outputDir, string database = null, string brandColor = null, string brandTheme = null)

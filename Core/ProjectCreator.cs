@@ -39,11 +39,16 @@ namespace NetForge.VsExtension.Core
 
             var target = Path.Combine(location, name);
 
-            if (!await DotNetCli.IsTemplateInstalledAsync())
+            // Prefer the bundled, version-matched .nupkg (offline + guarantees the flags the dialog passes
+            // exist); install it authoritatively each run. Fall back to nuget.org only if none is bundled.
+            var bundled = DotNetCli.FindBundledTemplate();
+            if (bundled != null || !await DotNetCli.IsTemplateInstalledAsync())
             {
-                await VS.StatusBar.ShowMessageAsync("Installing the NetForge template…");
-                await pane.WriteLineAsync("Installing the NetForge template (NetForge.Templates)…");
-                var install = await DotNetCli.InstallTemplateAsync();
+                await VS.StatusBar.ShowMessageAsync("Preparing the NetForge template…");
+                await pane.WriteLineAsync(bundled != null
+                    ? "Installing the bundled NetForge template (" + Path.GetFileName(bundled) + ")…"
+                    : "Installing the NetForge template (NetForge.Templates)…");
+                var install = await DotNetCli.InstallTemplateAsync(bundled);
                 await pane.WriteLineAsync(install.StdOut + install.StdErr);
                 if (install.Code != 0)
                 {

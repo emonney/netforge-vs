@@ -73,6 +73,11 @@
     <Content Include="LICENSE">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <!-- The version-matched free template, bundled so Community scaffolding is offline and always accepts
+         the flags the dialog passes. DotNetCli installs it from here so it wins over any stale nuget copy. -->
+    <Content Include="Templates\*.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
   </ItemGroup>
 
   <!-- Images shown inside the WPF dialogs (embedded as WPF resources, addressable via pack URIs). -->
