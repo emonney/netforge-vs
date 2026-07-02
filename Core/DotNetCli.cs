@@ -78,16 +78,6 @@ namespace NetForge.VsExtension.Core
             return new SdkInfo { Installed = result.Code == 0, Major = major, Version = version };
         }
 
-        public static async Task<bool> IsTemplateInstalledAsync()
-        {
-            var result = await RunAsync("new list " + TemplateShortName);
-            if (result.Code != 0)
-                return false;
-            var text = result.StdOut;
-            return text.IndexOf(TemplateShortName, StringComparison.OrdinalIgnoreCase) >= 0
-                && text.IndexOf("no templates", StringComparison.OrdinalIgnoreCase) < 0;
-        }
-
         /// <summary>The version-matched NetForge.Templates.*.nupkg bundled beside the extension, or null.</summary>
         public static string FindBundledTemplate()
         {
@@ -105,12 +95,42 @@ namespace NetForge.VsExtension.Core
             }
         }
 
-        /// <summary>Install the Community template: a bundled .nupkg (offline, version-matched, --force) or the nuget id.</summary>
-        public static Task<CliResult> InstallTemplateAsync(string source = null)
+        /// <summary>How many NetForge.Templates packages are installed. Each `dotnet new install` of a local
+        /// nupkg adds its own entry, so this catches the duplicates that a `--force` reinstall would create.</summary>
+        public static async Task<int> CountCommunityInstallsAsync()
         {
-            return string.IsNullOrEmpty(source)
-                ? RunAsync("new install " + TemplatePackageId)
-                : RunAsync("new install \"" + source + "\" --force");
+            var result = await RunAsync("new uninstall");
+            if (result.Code != 0)
+                return 0;
+            var hint = "dotnet new uninstall " + TemplatePackageId;
+            int n = 0;
+            foreach (var line in result.StdOut.Split('\n'))
+                if (line.Trim() == hint) n++;
+            return n;
+        }
+
+        /// <summary>
+        /// Ensures exactly one NetForge.Templates is installed — from the bundled nupkg when present, else nuget.
+        /// NEVER uses <c>--force</c>: forcing a local-path install ADDS a duplicate entry every time, which
+        /// eventually breaks scaffolding ("Sequence contains more than one matching element"). Any extra/old
+        /// copies are uninstalled first. <paramref name="forceReinstall"/> reinstalls even when one copy is
+        /// already present (used on a new extension version to pick up a refreshed bundled template).
+        /// Returns true if a NetForge.Templates ends up installed.
+        /// </summary>
+        public static async Task<bool> EnsureCommunityTemplateAsync(string bundledPath, bool forceReinstall)
+        {
+            var count = await CountCommunityInstallsAsync();
+            if (!forceReinstall && count == 1)
+                return true; // steady state: exactly one install
+
+            // Clean slate — remove all NetForge.Templates entries (duplicates and/or an old version).
+            for (int i = 0; i < 10 && (await CountCommunityInstallsAsync()) > 0; i++)
+                await RunAsync("new uninstall " + TemplatePackageId);
+
+            var install = string.IsNullOrEmpty(bundledPath)
+                ? await RunAsync("new install " + TemplatePackageId)
+                : await RunAsync("new install \"" + bundledPath + "\"");
+            return install.Code == 0;
         }
 
         public static Task<CliResult> ScaffoldAsync(string name, string outputDir, string database = null, string brandColor = null, string brandTheme = null)

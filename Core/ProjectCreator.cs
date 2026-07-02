@@ -39,22 +39,16 @@ namespace NetForge.VsExtension.Core
 
             var target = Path.Combine(location, name);
 
-            // Prefer the bundled, version-matched .nupkg (offline + guarantees the flags the dialog passes
-            // exist); install it authoritatively each run. Fall back to nuget.org only if none is bundled.
-            var bundled = DotNetCli.FindBundledTemplate();
-            if (bundled != null || !await DotNetCli.IsTemplateInstalledAsync())
+            // Make sure exactly one NetForge.Templates is installed (from the bundled nupkg), without ever
+            // re-installing when it's already present — a --force reinstall of a local nupkg DUPLICATES the
+            // entry and eventually breaks scaffolding. EnsureCommunityTemplateAsync is a no-op in the common
+            // "already installed once" case and cleans up any duplicates otherwise.
+            await VS.StatusBar.ShowMessageAsync("Preparing the NetForge template…");
+            await pane.WriteLineAsync("Ensuring the NetForge template is installed…");
+            if (!await DotNetCli.EnsureCommunityTemplateAsync(DotNetCli.FindBundledTemplate(), forceReinstall: false))
             {
-                await VS.StatusBar.ShowMessageAsync("Preparing the NetForge template…");
-                await pane.WriteLineAsync(bundled != null
-                    ? "Installing the bundled NetForge template (" + Path.GetFileName(bundled) + ")…"
-                    : "Installing the NetForge template (NetForge.Templates)…");
-                var install = await DotNetCli.InstallTemplateAsync(bundled);
-                await pane.WriteLineAsync(install.StdOut + install.StdErr);
-                if (install.Code != 0)
-                {
-                    await FailAsync(pane, "Couldn't install the NetForge template.");
-                    return;
-                }
+                await FailAsync(pane, "Couldn't install the NetForge template.");
+                return;
             }
 
             await VS.StatusBar.ShowMessageAsync("Scaffolding " + name + "…");
@@ -79,6 +73,7 @@ namespace NetForge.VsExtension.Core
                     await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     solutionService.OpenSolutionFile(0, solution);
                     await TrySetServerStartupAsync(name + ".Server");
+                    await TryOpenGettingStartedAsync(target);
                 }
                 catch (Exception ex)
                 {
@@ -130,6 +125,23 @@ namespace NetForge.VsExtension.Core
             catch
             {
                 // Low-priority nicety; the user can set the startup project manually.
+            }
+        }
+
+        // The template's open-file post-action only fires in VS's native dialog (not when we shell `dotnet
+        // new`), so open the welcome doc ourselves after our wizard scaffolds — matching that experience.
+        private static async Task TryOpenGettingStartedAsync(string projectDir)
+        {
+            try
+            {
+                var path = Path.Combine(projectDir, "docs", "GETTING_STARTED.md");
+                if (!File.Exists(path)) return;
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                await VS.Documents.OpenAsync(path);
+            }
+            catch
+            {
+                // Non-critical nicety.
             }
         }
 
