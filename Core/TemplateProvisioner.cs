@@ -15,22 +15,25 @@ namespace NetForge.VsExtension.Core
         {
             try
             {
-                var marker = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "NetForge", "vs-template-" + extensionVersion + ".ok");
-
                 var sdk = await DotNetCli.ProbeAsync();
                 if (!sdk.Installed)
                     return; // no SDK yet; don't nag at startup — the New Project flow handles it on demand
 
                 // Install the bundled, version-matched .nupkg (offline) so NetForge shows in the native
                 // "Create a new project" dialog after this extension loads — not only after the first use of
-                // our own wizard. The marker means "this extension version has provisioned once" and triggers a
-                // reinstall on a fresh/updated extension; but we DON'T early-return on it — the user may have
-                // uninstalled the template since, so EnsureCommunityTemplateAsync always verifies the real
-                // install count and self-heals (and never duplicates — see its note).
+                // our own wizard. Key the marker by the bundled template's file name (it carries the version),
+                // so a refreshed template reinstalls even if the extension version didn't change. We DON'T
+                // early-return on the marker — the user may have uninstalled the template since, so
+                // EnsureCommunityTemplateAsync always verifies the real install count and self-heals (and never
+                // duplicates — see its note).
+                var bundled = DotNetCli.FindBundledTemplate();
+                var key = bundled != null ? Path.GetFileNameWithoutExtension(bundled) : "ext-" + extensionVersion;
+                var marker = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "NetForge", "vs-template-" + key + ".ok");
+
                 bool firstForThisVersion = !File.Exists(marker);
-                bool ok = await DotNetCli.EnsureCommunityTemplateAsync(DotNetCli.FindBundledTemplate(), forceReinstall: firstForThisVersion);
+                bool ok = await DotNetCli.EnsureCommunityTemplateAsync(bundled, forceReinstall: firstForThisVersion);
                 if (ok && firstForThisVersion)
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(marker));
