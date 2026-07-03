@@ -9,7 +9,7 @@ Free Community edition (MIT): ASP.NET Core 10 minimal APIs + EF Core; React 19 +
 
 Pro adds multi-tenancy, audit, a widget dashboard, global search, notifications &amp; real-time (SignalR), webhooks, 2FA/OAuth/sessions, file uploads, CSV/Excel/PDF export &amp; import, background jobs, PWA, and a Sales demo.
 
-Create it from the NetForge menu or the “Create a new project” dialog. Pro unlocks with any GitHub Sponsors tier; Community stays free &amp; MIT, forever.</Description>
+Create projects from Extensions ▸ NetForge ▸ New NetForge Project… — a guided dialog (edition, database, theme, accent colour) that scaffolds and opens your app, ready to run on F5. Pro unlocks with any GitHub Sponsors tier; Community stays free &amp; MIT, forever.</Description>
     <MoreInfo>https://netforge.ebenmonney.com</MoreInfo>
     <License>LICENSE</License>
     <Icon>Resources\icon.png</Icon>
