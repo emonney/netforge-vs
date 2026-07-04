@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="NetForge.VsExtension.6f7a1b2c" Version="1.4.0" Language="en-US" Publisher="adentum" />
+    <Identity Id="NetForge.VsExtension.6f7a1b2c" Version="1.4.1" Language="en-US" Publisher="adentum" />
     <DisplayName>NetForge — ASP.NET Core + React Starter</DisplayName>
     <Description xml:space="preserve">Scaffold a production-shaped ASP.NET Core 10 + React 19 app in Visual Studio — an AI-ready starter, extensible by AI or by you. Create from Extensions ▸ NetForge. Free &amp; MIT; Pro adds multi-tenancy, audit, dashboards, webhooks &amp; more.</Description>
     <MoreInfo>https://netforge.ebenmonney.com</MoreInfo>
