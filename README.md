@@ -3,7 +3,7 @@
   <img src="https://raw.githubusercontent.com/emonney/netforge-vs/HEAD/Resources/sep-x.png" height="80" alt="×" />
   <img src="https://raw.githubusercontent.com/emonney/netforge-vs/HEAD/Resources/visual-studio.png" height="80" alt="Visual Studio" />
   <h1>NetForge for Visual Studio</h1>
-  <p><strong>Scaffold a production-shaped ASP.NET Core 10 + React 19 app in seconds — right inside Visual Studio.</strong></p>
+  <p><strong>Scaffold a production-shaped ASP.NET Core 10 app — with a React 19 or Angular 22 frontend — in seconds, right inside Visual Studio.</strong></p>
 </div>
 
 NetForge is an opinionated, **AI-ready**, beautiful-out-of-the-box starter for line-of-business apps — built to
@@ -14,9 +14,9 @@ This extension creates one without leaving the IDE.
 ## Create a project: **Extensions ▸ NetForge**
 
 **Extensions ▸ NetForge ▸ New NetForge Project…** is how you start a NetForge project in Visual Studio. It opens
-a guided dialog — pick an **edition**, **database**, **theme**, and **accent colour**, then name it. NetForge
-scaffolds locally and opens the ready-to-run solution. Press **F5** and the ASP.NET Core server builds and runs,
-starting the React client for you.
+a guided dialog — pick an **edition**, **frontend** (React or Angular), **database**, **theme**, and **accent
+colour**, then name it. NetForge scaffolds locally and opens the ready-to-run solution. Press **F5** and the
+ASP.NET Core server builds and runs, starting the client for you.
 
 ![NetForge dashboard](https://raw.githubusercontent.com/emonney/netforge-vs/HEAD/Resources/screenshots/dashboard-light.png)
 
@@ -28,9 +28,9 @@ starting the React client for you.
 ## Features
 
 - **Extensions ▸ NetForge ▸ New NetForge Project…** — the guided creation dialog. Scaffolds locally and opens
-  the solution; **F5** runs the whole stack (the ASP.NET Core server starts the React client).
-- **Pick your setup right in the dialog** — edition, database (**SQLite / PostgreSQL / SQL Server**), theme,
-  and brand accent colour.
+  the solution; **F5** runs the whole stack (the ASP.NET Core server starts the client).
+- **Pick your setup right in the dialog** — edition, frontend (**React 19 / Angular 22**), database (**SQLite /
+  PostgreSQL / SQL Server**), theme, and brand accent colour.
 - **Community scaffolds locally** with `dotnet new` — offline, instant, no sign-in. The extension detects your
   .NET SDK and installs the `NetForge.Templates` package the first time.
 - **A themed Pro showcase** — see exactly what Pro unlocks (screenshots + the full feature grid) inside the IDE,
@@ -38,7 +38,7 @@ starting the React client for you.
 - Quick links to the **configurator**, **live demo**, and **docs**.
 
 > **Tip:** NetForge also appears in Visual Studio's *Create a new project* dialog, but **Extensions ▸ NetForge**
-> is the recommended path — it always includes the React client and opens the solution ready to run.
+> is the recommended path — it always includes your chosen client (React or Angular) and opens the solution ready to run.
 
 ## Requirements
 
@@ -63,8 +63,8 @@ from the [configurator](https://netforge.ebenmonney.com) after signing in, and i
 ## Getting started
 
 1. **Extensions ▸ NetForge ▸ New NetForge Project…**
-2. Choose **Community**, pick your database / theme / accent colour, name your app, and choose a folder.
-3. Press **F5** — the ASP.NET Core server builds and runs, starting the React client for you. Sign in with the
+2. Choose **Community**, pick your frontend / database / theme / accent colour, name your app, and choose a folder.
+3. Press **F5** — the ASP.NET Core server builds and runs, starting the client for you. Sign in with the
    seeded dev admin (credentials are in the project **README.md**).
 
 ## Links

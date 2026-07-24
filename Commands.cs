@@ -64,7 +64,7 @@ namespace NetForge.VsExtension
                 return;
             }
 
-            await ProjectCreator.CreateCommunityAsync(dialog.ProjectName, dialog.Location, dialog.Database, dialog.BrandColor, dialog.BrandTheme);
+            await ProjectCreator.CreateCommunityAsync(dialog.ProjectName, dialog.Location, dialog.Frontend, dialog.Database, dialog.BrandColor, dialog.BrandTheme);
         }
     }
 }

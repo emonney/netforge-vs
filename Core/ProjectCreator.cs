@@ -12,7 +12,7 @@ namespace NetForge.VsExtension.Core
     {
         private static OutputWindowPane _pane;
 
-        public static async Task CreateCommunityAsync(string name, string location, string database = null, string brandColor = null, string brandTheme = null)
+        public static async Task CreateCommunityAsync(string name, string location, string frontend = null, string database = null, string brandColor = null, string brandTheme = null)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             var pane = await GetPaneAsync();
@@ -52,8 +52,8 @@ namespace NetForge.VsExtension.Core
             }
 
             await VS.StatusBar.ShowMessageAsync("Scaffolding " + name + "…");
-            await pane.WriteLineAsync("Scaffolding into " + target + " (database: " + (string.IsNullOrEmpty(database) ? "sqlite" : database) + ")…");
-            var result = await DotNetCli.ScaffoldAsync(name, target, database, brandColor, brandTheme);
+            await pane.WriteLineAsync("Scaffolding into " + target + " (frontend: " + (string.IsNullOrEmpty(frontend) ? "react" : frontend) + ", database: " + (string.IsNullOrEmpty(database) ? "sqlite" : database) + ")…");
+            var result = await DotNetCli.ScaffoldAsync(name, target, frontend, database, brandColor, brandTheme);
             await pane.WriteLineAsync(result.StdOut + result.StdErr);
             if (result.Code != 0)
             {

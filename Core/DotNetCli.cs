@@ -133,10 +133,12 @@ namespace NetForge.VsExtension.Core
             return install.Code == 0;
         }
 
-        public static Task<CliResult> ScaffoldAsync(string name, string outputDir, string database = null, string brandColor = null, string brandTheme = null)
+        public static Task<CliResult> ScaffoldAsync(string name, string outputDir, string frontend = null, string database = null, string brandColor = null, string brandTheme = null)
         {
             var args = new StringBuilder();
             args.AppendFormat("new {0} --name \"{1}\" --output \"{2}\"", TemplateShortName, name, outputDir);
+            // React is the template default, so only pass the flag for the non-default (Angular) choice.
+            if (!string.IsNullOrWhiteSpace(frontend) && frontend != "react") args.Append(" --frontend ").Append(frontend);
             if (!string.IsNullOrWhiteSpace(database)) args.Append(" --database ").Append(database);
             if (!string.IsNullOrWhiteSpace(brandTheme)) args.AppendFormat(" --brandTheme \"{0}\"", brandTheme.Trim());
             if (!string.IsNullOrWhiteSpace(brandColor)) args.AppendFormat(" --brandColor \"{0}\"", brandColor.Trim());

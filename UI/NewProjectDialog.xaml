@@ -141,7 +141,7 @@
                    Width="30" Height="30" Margin="0,0,10,0" />
             <TextBlock Text="Create a NetForge project" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" />
         </StackPanel>
-        <TextBlock Text="A production-shaped ASP.NET Core 10 + React 19 starter."
+        <TextBlock Text="A production-shaped ASP.NET Core 10 + React 19 or Angular 22 starter."
                    Foreground="{DynamicResource Muted}" Margin="0,0,0,16" />
 
         <Border Style="{StaticResource Card}">
@@ -179,6 +179,14 @@
                     <Button x:Name="BtnBrowse" Grid.Column="1" Content="Browse…" Margin="8,0,0,0"
                             Style="{StaticResource Secondary}" Click="Browse_Click" />
                 </Grid>
+
+                <StackPanel Margin="0,12,0,0">
+                    <TextBlock Text="Frontend" Margin="0,0,0,4" />
+                    <ComboBox x:Name="CboFrontend" SelectedIndex="0">
+                        <ComboBoxItem Content="React 19 + Vite" Tag="react" />
+                        <ComboBoxItem Content="Angular 22 + Material" Tag="angular" />
+                    </ComboBox>
+                </StackPanel>
 
                 <Grid Margin="0,12,0,0">
                     <Grid.ColumnDefinitions>
