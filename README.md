@@ -57,8 +57,10 @@ ASP.NET Core server builds and runs, starting the client for you.
 | PWA, tour, changelog, Sales demo domain | — | ✅ |
 
 The **Community** edition is scaffolded locally and is free forever under the MIT license. **Pro** is generated
-from the [configurator](https://netforge.ebenmonney.com) after signing in, and is unlocked by any
-[GitHub Sponsors](https://github.com/sponsors/emonney) tier.
+from the [configurator](https://netforge.ebenmonney.com) after you sign in and get a Pro plan. Prefer not to
+build it by hand? Describe your app in plain language and [**AI builds it for you**](https://netforge.ebenmonney.com/ai) —
+with a real senior developer backing every build. Configure it or let AI build it; either way you download a
+standard ASP.NET Core + React/Angular app you fully own, with no lock-in.
 
 ## Getting started
 
@@ -69,7 +71,7 @@ from the [configurator](https://netforge.ebenmonney.com) after signing in, and i
 
 ## Links
 
-🌐 [Configurator](https://netforge.ebenmonney.com) · ▶ [Live demo](https://demo.netforge.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · 💜 [Sponsor & unlock Pro](https://github.com/sponsors/emonney)
+🌐 [Configurator](https://netforge.ebenmonney.com) · 🤖 [Have AI build it](https://netforge.ebenmonney.com/ai) · ▶ [Live demo](https://demo.netforge.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · ✨ [Get Pro](https://netforge.ebenmonney.com/pricing)
 
 ## Build from source
 
@@ -84,4 +86,4 @@ The `.vsix` lands in `bin\Release\net48\`.
 
 ## License
 
-The extension is MIT-licensed. The Community template it scaffolds is MIT; the Pro edition is sponsor-licensed.
+The extension is MIT-licensed. The Community template it scaffolds is MIT; the Pro edition is commercially licensed.

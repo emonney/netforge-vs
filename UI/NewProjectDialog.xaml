@@ -157,9 +157,9 @@
         <Border Style="{StaticResource Card}">
             <RadioButton x:Name="RdoPro" GroupName="Edition" Checked="Edition_Changed" Foreground="{DynamicResource NfText}">
                 <StackPanel Margin="6,0,0,0">
-                    <TextBlock FontWeight="SemiBold"><Run Text="Pro" /><Run Text="  ·  Sponsor-supported" Foreground="#9AA0A6" /></TextBlock>
+                    <TextBlock FontWeight="SemiBold"><Run Text="Pro" /><Run Text="  ·  Paid plan" Foreground="#9AA0A6" /></TextBlock>
                     <TextBlock Foreground="{DynamicResource Muted}" TextWrapping="Wrap"
-                               Text="Everything plus multi-tenancy, audit, dashboards, webhooks, search, and real-time. Opens the configurator to sign in." />
+                               Text="Everything plus multi-tenancy, audit, dashboards, webhooks, search, and real-time. Get it with a Pro plan — or have AI build the whole app for you. Opens the configurator." />
                 </StackPanel>
             </RadioButton>
         </Border>

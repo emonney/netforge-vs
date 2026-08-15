@@ -47,7 +47,8 @@ namespace NetForge.VsExtension
         public const string Configurator = "https://netforge.ebenmonney.com";
         public const string Demo = "https://demo.netforge.ebenmonney.com";
         public const string Docs = "https://docs.netforge.ebenmonney.com";
-        public const string Sponsor = "https://github.com/sponsors/emonney";
+        public const string Pricing = "https://netforge.ebenmonney.com/pricing";
+        public const string AiBuild = "https://netforge.ebenmonney.com/ai";
         public const string DotnetDownload = "https://dotnet.microsoft.com/download/dotnet/10.0";
 
         public static void Open(string url) =>

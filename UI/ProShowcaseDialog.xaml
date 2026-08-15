@@ -70,10 +70,11 @@
             </Border>
             <TextBlock Text="Build the whole back-office, not just the login page." FontSize="23" FontWeight="SemiBold" TextWrapping="Wrap" />
             <TextBlock Margin="0,8,0,16" Foreground="{DynamicResource Muted}" TextWrapping="Wrap"
-                       Text="You're building on the free, MIT-licensed Community core. Pro adds the subsystems every line-of-business app eventually needs — already wired, tested, and beautiful in light and dark." />
+                       Text="You're building on the free, MIT-licensed Community core. Pro adds the subsystems every line-of-business app eventually needs — already wired, tested, and beautiful in light and dark. Get Pro with a plan, or have AI build the whole thing for you — a real senior developer backs every build." />
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,22">
-                <Button Content="Sponsor &amp; unlock Pro" Style="{StaticResource Primary}" Tag="https://github.com/sponsors/emonney" Click="Open_Click" />
+                <Button Content="Get Pro" Style="{StaticResource Primary}" Tag="https://netforge.ebenmonney.com/pricing" Click="Open_Click" />
+                <Button Content="Have AI build it" Style="{StaticResource Secondary}" Tag="https://netforge.ebenmonney.com/ai" Click="Open_Click" />
                 <Button Content="Live demo" Style="{StaticResource Secondary}" Tag="https://demo.netforge.ebenmonney.com" Click="Open_Click" />
                 <Button Content="Configurator" Style="{StaticResource Secondary}" Tag="https://netforge.ebenmonney.com" Click="Open_Click" />
             </StackPanel>
@@ -99,7 +100,7 @@
 
             <Border BorderThickness="0,1,0,0" Margin="0,16,0,0" Padding="0,14,0,0" BorderBrush="{DynamicResource NfBorder}">
                 <TextBlock Foreground="{DynamicResource Muted}" TextWrapping="Wrap"
-                           Text="The Community edition stays free &amp; MIT, forever. Pro is unlocked by any GitHub Sponsors tier, and includes the offline CLI and the private template feed." />
+                           Text="The Community edition stays free &amp; MIT, forever. Pro is a paid plan on the configurator, and includes the offline CLI and the private template feed. No lock-in — you download a standard app and host it anywhere." />
             </Border>
         </StackPanel>
     </ScrollViewer>
