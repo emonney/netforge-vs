@@ -19,7 +19,7 @@ namespace NetForge.VsExtension
 
             mcs.AddCommand(Bind(PackageIds.NewProject, () => Fire(package, NewProjectAsync)));
             mcs.AddCommand(Bind(PackageIds.WhatsInPro, ShowPro));
-            mcs.AddCommand(Bind(PackageIds.OpenConfigurator, () => NetForgeUrls.Open(NetForgeUrls.Configurator)));
+            mcs.AddCommand(Bind(PackageIds.OpenConfigurator, () => NetForgeUrls.Open(NetForgeUrls.Configure)));
             mcs.AddCommand(Bind(PackageIds.OpenDemo, () => NetForgeUrls.Open(NetForgeUrls.Demo)));
             mcs.AddCommand(Bind(PackageIds.OpenDocs, () => NetForgeUrls.Open(NetForgeUrls.Docs)));
         }
@@ -59,7 +59,7 @@ namespace NetForge.VsExtension
             if (dialog.SelectedEdition == NewProjectDialog.Edition.Pro)
             {
                 var name = Uri.EscapeDataString(dialog.ProjectName ?? string.Empty);
-                var url = NetForgeUrls.Configurator + "?edition=pro" + (string.IsNullOrEmpty(name) ? "" : "&name=" + name);
+                var url = NetForgeUrls.Configurator + "?edition=pro" + (string.IsNullOrEmpty(name) ? "" : "&name=" + name) + "#configure";
                 NetForgeUrls.Open(url);
                 return;
             }

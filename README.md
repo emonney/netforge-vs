@@ -57,7 +57,7 @@ ASP.NET Core server builds and runs, starting the client for you.
 | PWA, tour, changelog, Sales demo domain | — | ✅ |
 
 The **Community** edition is scaffolded locally and is free forever under the MIT license. **Pro** is generated
-from the [configurator](https://netforge.ebenmonney.com) after you sign in and get a Pro plan. Prefer not to
+from the [configurator](https://netforge.ebenmonney.com/#configure) after you sign in and get a Pro plan. Prefer not to
 build it by hand? Describe your app in plain language and [**AI builds it for you**](https://netforge.ebenmonney.com/ai) —
 with a real senior developer backing every build. Configure it or let AI build it; either way you download a
 standard ASP.NET Core + React/Angular app you fully own, with no lock-in.
@@ -71,7 +71,7 @@ standard ASP.NET Core + React/Angular app you fully own, with no lock-in.
 
 ## Links
 
-🌐 [Configurator](https://netforge.ebenmonney.com) · 🤖 [Have AI build it](https://netforge.ebenmonney.com/ai) · ▶ [Live demo](https://demo.netforge.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · ✨ [Get Pro](https://netforge.ebenmonney.com/pricing)
+🌐 [Configurator](https://netforge.ebenmonney.com/#configure) · 🤖 [Have AI build it](https://netforge.ebenmonney.com/ai) · ▶ [Live demo](https://demo.netforge.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · ✨ [Get Pro](https://netforge.ebenmonney.com/pricing)
 
 ## Build from source
 

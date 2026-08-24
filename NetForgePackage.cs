@@ -45,6 +45,10 @@ namespace NetForge.VsExtension
     internal static class NetForgeUrls
     {
         public const string Configurator = "https://netforge.ebenmonney.com";
+
+        /// <summary>The configurator, deep-linked to its configure pane rather than its AI pitch —
+        /// what every "open the configurator" affordance should point at.</summary>
+        public const string Configure = "https://netforge.ebenmonney.com/#configure";
         public const string Demo = "https://demo.netforge.ebenmonney.com";
         public const string Docs = "https://docs.netforge.ebenmonney.com";
         public const string Pricing = "https://netforge.ebenmonney.com/pricing";
