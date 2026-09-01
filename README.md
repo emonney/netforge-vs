@@ -71,7 +71,7 @@ standard ASP.NET Core + React/Angular app you fully own, with no lock-in.
 
 ## Links
 
-🌐 [Configurator](https://netforge.ebenmonney.com/#configure) · 🤖 [Have AI build it](https://netforge.ebenmonney.com/ai) · ▶ [Live demo](https://demo.netforge.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · ✨ [Get Pro](https://netforge.ebenmonney.com/pricing)
+🌐 [Configurator](https://netforge.ebenmonney.com/#configure) · 🤖 [Have AI build it](https://netforge.ebenmonney.com/ai) · ▶ [Live demo](https://netforge-react.ebenmonney.com) · 📘 [Docs](https://docs.netforge.ebenmonney.com) · ✨ [Get Pro](https://netforge.ebenmonney.com/pricing)
 
 ## Build from source
 

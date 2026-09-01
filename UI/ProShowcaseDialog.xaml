@@ -75,7 +75,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,0,22">
                 <Button Content="Get Pro" Style="{StaticResource Primary}" Tag="https://netforge.ebenmonney.com/pricing" Click="Open_Click" />
                 <Button Content="Have AI build it" Style="{StaticResource Secondary}" Tag="https://netforge.ebenmonney.com/ai" Click="Open_Click" />
-                <Button Content="Live demo" Style="{StaticResource Secondary}" Tag="https://demo.netforge.ebenmonney.com" Click="Open_Click" />
+                <Button Content="Live demo" Style="{StaticResource Secondary}" Tag="https://netforge-react.ebenmonney.com" Click="Open_Click" />
                 <Button Content="Configurator" Style="{StaticResource Secondary}" Tag="https://netforge.ebenmonney.com/#configure" Click="Open_Click" />
             </StackPanel>
 

@@ -49,7 +49,7 @@ namespace NetForge.VsExtension
         /// <summary>The configurator, deep-linked to its configure pane rather than its AI pitch —
         /// what every "open the configurator" affordance should point at.</summary>
         public const string Configure = "https://netforge.ebenmonney.com/#configure";
-        public const string Demo = "https://demo.netforge.ebenmonney.com";
+        public const string Demo = "https://netforge-react.ebenmonney.com";
         public const string Docs = "https://docs.netforge.ebenmonney.com";
         public const string Pricing = "https://netforge.ebenmonney.com/pricing";
         public const string AiBuild = "https://netforge.ebenmonney.com/ai";
